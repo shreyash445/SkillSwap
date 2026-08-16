@@ -184,6 +184,6 @@ skillswap-mvp/
 
 > *"The best way to learn is to teach — and the best way to grow is to swap."*
 
-Made with 💜 · [Report a bug](https://github.com/shreyash445/SkillSwap/issues) · [SkillSwap](https://github.com/shreyash445/SkillSwap)
+Made with brain · [Report a bug](https://github.com/shreyash445/SkillSwap/issues) · [SkillSwap](https://github.com/shreyash445/SkillSwap)
 
 </div>
