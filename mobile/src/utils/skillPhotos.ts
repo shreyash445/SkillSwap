@@ -1,0 +1,61 @@
+const CDN = (id: string) =>
+  `https://images.unsplash.com/${id}?auto=format&fit=crop&w=900&q=80`;
+
+const PHOTOS: Record<string, string> = {
+  Python: CDN("photo-1461749280684-dccba630e2f6"),
+  JavaScript: CDN("photo-1579468118864-1b9ea3c0db4a"),
+  "Web Development": CDN("photo-1547658719-da2b51169166"),
+  "Data Science": CDN("photo-1551288049-bebda4e38f71"),
+  Excel: CDN("photo-1554224155-6726b3ff858f"),
+  "Machine Learning": CDN("photo-1527474305487-b87b222841cc"),
+  SQL: CDN("photo-1558494949-ef010cbdcc31"),
+  "Git & GitHub": CDN("photo-1618401471353-b98afee0b2eb"),
+  React: CDN("photo-1633356122544-f134324a6cee"),
+  "Node.js": CDN("photo-1627398242454-45a1465c2479"),
+  "C++": CDN("photo-1555949963-aa79dcee981c"),
+  Java: CDN("photo-1573496359142-b8d87734a5a2"),
+  Linux: CDN("photo-1629654297299-c8506221ca97"),
+  Cybersecurity: CDN("photo-1550751827-4bd374c3f58b"),
+  "Mobile Development": CDN("photo-1512941937669-90a1b58e7e9c"),
+  "UI/UX Design": CDN("photo-1561070791-2526d30994b5"),
+  "Graphic Design": CDN("photo-1626785774573-4b799315345d"),
+  "Video Editing": CDN("photo-1574717024653-61fd2cf4d44d"),
+  Photography: CDN("photo-1516035069371-29a1b244cc32"),
+  Writing: CDN("photo-1455390582262-044cdead277a"),
+  Drawing: CDN("photo-1561214115-f2f134cc4912"),
+  "Digital Art": CDN("photo-1547891654-e66ed7ebb968"),
+  "Public Speaking": CDN("photo-1475721027785-f74eccf877e2"),
+  "Music Production": CDN("photo-1598488035139-bdbb2231ce04"),
+  Cooking: CDN("photo-1556910103-1c02745aae4d"),
+  Spanish: CDN("photo-1529253355930-ddbe423a2ac7"),
+  French: CDN("photo-1502602898657-3e91760cbb34"),
+  Mandarin: CDN("photo-1526397751294-331021109fbd"),
+  German: CDN("photo-1532094349884-543bc11b234d"),
+  Japanese: CDN("photo-1528360983277-13d401cdc186"),
+  Korean: CDN("photo-1517154421773-0529f29ea451"),
+  Hindi: CDN("photo-1546435770-a3e426bf472b"),
+  Arabic: CDN("photo-1552346154-21d32810aba3"),
+  Portuguese: CDN("photo-1541746972996-4e0b0f43e02a"),
+  Italian: CDN("photo-1533676802871-eca1ae998cd5"),
+  Swimming: CDN("photo-1519315901367-f34ff9154487"),
+  Badminton: CDN("photo-1626224583764-f87db24ac4ea"),
+  Yoga: CDN("photo-1544367567-0f2fcb009e0b"),
+  Guitar: CDN("photo-1510915361894-db8b60106cb1"),
+  Piano: CDN("photo-1520523839897-bd0b52f945a0"),
+  Basketball: CDN("photo-1546519638-68e109498ffc"),
+  Football: CDN("photo-1579952363873-27f3bade9f55"),
+  Running: CDN("photo-1476480862126-209bfaa8edc8"),
+  Calisthenics: CDN("photo-1541534741688-6078c6bfb5c5"),
+  Chess: CDN("photo-1529699211952-734e80c4d42b"),
+  Tennis: CDN("photo-1595435934249-5df7ed86e1c0"),
+  "Table Tennis": CDN("photo-1533093818119-ac1fa47a6d59"),
+  Skateboarding: CDN("photo-1520045892732-304bc3ac5d8e"),
+  "Rock Climbing": CDN("photo-1522163182402-834f871fd851"),
+  "Martial Arts": CDN("photo-1555597673-b21d5c935865"),
+};
+
+export const FALLBACK_PHOTO = CDN("photo-1500648767791-00dcc994a43e");
+
+export function photoForSkill(skillName: string): string {
+  return PHOTOS[skillName] ?? FALLBACK_PHOTO;
+}

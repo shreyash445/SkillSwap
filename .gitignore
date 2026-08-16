@@ -1,0 +1,48 @@
+# dependencies
+node_modules/
+
+# Expo / React Native
+mobile/.expo/
+mobile/dist/
+mobile/web-build/
+mobile/expo-env.d.ts
+mobile/ios/
+mobile/android/
+mobile/.kotlin/
+mobile/*.jks
+mobile/*.p8
+mobile/*.p12
+mobile/*.key
+mobile/*.mobileprovision
+mobile/.metro-health-check*
+mobile/expo-log.txt
+
+# Python
+backend/venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Django
+backend/db.sqlite3
+backend/staticfiles/
+backend/media/
+
+# environment
+.env
+.env*.local
+
+# editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.pem
+
+# typescript
+*.tsbuildinfo
+
+# debug
+npm-debug.*
+yarn-debug.*
+yarn-error.*
