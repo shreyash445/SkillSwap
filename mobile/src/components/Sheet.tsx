@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Modal as RNModal, Pressable, StyleSheet, View } from "react-native";
 import Animated, {
   FadeIn,

@@ -1,4 +1,4 @@
-﻿import React, { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Sheet } from "./Sheet";
@@ -52,16 +52,6 @@ export function ProposeSheet({
     return s?.skill_id ?? null;
   }, [user, theirSkill, defaults.theirs]);
 
-  const open = () => {
-    setMySkill(null);
-    setTheirSkill(null);
-    setDuration(60);
-    setDate("");
-    setMessage("");
-    setError("");
-    setSent(null);
-  };
-
   const send = async () => {
     if (!mySkillId || !theirSkillId) return setError("Pick one skill for each side");
     setSending(true);
@@ -93,7 +83,7 @@ export function ProposeSheet({
           <Text style={styles.sentTitle}>Proposal sent!</Text>
           <Text style={styles.sentText}>
             You offered to teach {sent.skill_offered_name} to {user.first_name} in exchange for{" "}
-            {sent.skill_wanted_name}. They'll see it on their dashboard.
+            {sent.skill_wanted_name}. They&apos;ll see it on their dashboard.
           </Text>
           <Button label="Done" onPress={onDone} />
         </View>

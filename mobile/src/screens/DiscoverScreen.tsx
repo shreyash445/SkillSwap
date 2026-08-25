@@ -1,4 +1,4 @@
-﻿import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   ActivityIndicator,
   Image,
@@ -29,6 +29,93 @@ type Props = TabScreenProps<"Discover">;
 
 type Sort = "match" | "recent" | "rating";
 
+function DiscoverCard({
+  item,
+  onOpen,
+  onPropose,
+}: {
+  item: User;
+  onOpen: () => void;
+  onPropose: () => void;
+}) {
+  const isMatch = (item.match_score ?? 0) >= 50;
+  const mainSkill = item.offers[0]?.name ?? item.wants[0]?.name ?? "Learning";
+  const [photoOk, setPhotoOk] = useState(true);
+  return (
+    <Pressable style={styles.card} onPress={onOpen}>
+      <View style={styles.photoWrap}>
+        <Image
+          source={{ uri: photoOk ? photoForSkill(mainSkill) : FALLBACK_PHOTO }}
+          style={StyleSheet.absoluteFill}
+          resizeMode="cover"
+          onError={() => setPhotoOk(false)}
+        />
+        <View style={styles.photoShade} />
+        <View style={styles.cardTop}>
+          <Avatar initials={item.initials} color={item.avatar_color} size={46} />
+          <View style={styles.cardIdentity}>
+            <Text style={styles.name}>{item.full_name}</Text>
+            <Text style={styles.avail}>
+              <Ionicons name="time-outline" size={12} color={colors.textFaint} />{" "}
+              {item.availability || "Flexible"}
+            </Text>
+          </View>
+          <RatingPill rating={item.avg_rating} count={item.rating_count} />
+        </View>
+      </View>
+
+      <View style={styles.skills}>
+        <View style={styles.skillGroup}>
+          <Text style={styles.groupLabel}>OFFERS</Text>
+          <View style={styles.tagWrap}>
+            {item.offers.map((o) => (
+              <SkillTag key={o.skill_id} name={o.name} category="technical" accent />
+            ))}
+          </View>
+        </View>
+        <View style={styles.skillGroup}>
+          <Text style={styles.groupLabel}>WANTS</Text>
+          <View style={styles.tagWrap}>
+            {item.wants.map((w) => (
+              <SkillTag key={w.skill_id} name={w.name} />
+            ))}
+          </View>
+        </View>
+      </View>
+
+      <View style={styles.cardFooter}>
+        {isMatch ? (
+          <View style={[styles.matchBadge, { backgroundColor: colors.accent }]}>
+            <Ionicons name="flash" size={12} color="#000000" />
+            <Text style={styles.matchText}>Complementary match</Text>
+          </View>
+        ) : (
+          <View style={styles.scoreWrap}>
+            <Text style={styles.score}>{item.match_score ?? 0}%</Text>
+            <Text style={styles.scoreLabel}>match</Text>
+          </View>
+        )}
+        <Pressable
+          style={[
+            styles.propose,
+            {
+              backgroundColor: withAlpha(colors.accent, 0.1),
+              borderWidth: 1,
+              borderColor: withAlpha(colors.accent, 0.35),
+            },
+          ]}
+          onPress={(e) => {
+            e.stopPropagation();
+            onPropose();
+          }}
+        >
+          <Text style={[styles.proposeText, { color: colors.accent }]}>Propose exchange</Text>
+        </Pressable>
+      </View>
+    </Pressable>
+  );
+}
+
 export function DiscoverScreen({ navigation }: Props) {
   const [users, setUsers] = useState<User[]>([]);
   const [skills, setSkills] = useState<Skill[]>([]);
@@ -36,6 +123,7 @@ export function DiscoverScreen({ navigation }: Props) {
   const [direction, setDirection] = useState<"offered" | "wanted" | null>(null);
   const [filterOpen, setFilterOpen] = useState(false);
   const [sort, setSort] = useState<Sort>("match");
+  const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [proposeFor, setProposeFor] = useState<User | null>(null);
@@ -50,6 +138,8 @@ export function DiscoverScreen({ navigation }: Props) {
       setSkills(s);
     } catch {
       /* ignore */
+    } finally {
+      setLoading(false);
     }
   }, [sort]);
 
@@ -63,103 +153,39 @@ export function DiscoverScreen({ navigation }: Props) {
     setRefreshing(false);
   };
 
-  const filtered = users.filter(
-    (u) =>
+  const filtered = users.filter((u) => {
+    const matchesSkill =
       !filterSkill ||
       (direction === "offered"
         ? u.offers.some((o) => o.skill_id === filterSkill)
-        : u.wants.some((w) => w.skill_id === filterSkill))
-  );
+        : u.wants.some((w) => w.skill_id === filterSkill));
+    const q = search.trim().toLowerCase();
+    const matchesName = !q || u.full_name.toLowerCase().includes(q);
+    return matchesSkill && matchesName;
+  });
 
   const filterSkillName = skills.find((s) => s.id === filterSkill)?.name;
 
-  const renderCard = ({ item, index }: { item: User; index: number }) => {
-    const isMatch = (item.match_score ?? 0) >= 50;
-    const mainSkill = item.offers[0]?.name ?? item.wants[0]?.name ?? "Learning";
-    const [photoOk, setPhotoOk] = React.useState(true);
-    return (
-      <Pressable
-        style={styles.card}
-        onPress={() => navigation.navigate("UserProfile", { user: item })}
-      >
-        <View style={styles.photoWrap}>
-          <Image
-            source={{ uri: photoOk ? photoForSkill(mainSkill) : FALLBACK_PHOTO }}
-            style={StyleSheet.absoluteFill}
-            resizeMode="cover"
-            onError={() => setPhotoOk(false)}
-          />
-          <View style={styles.photoShade} />
-          <View style={styles.cardTop}>
-            <Avatar initials={item.initials} color={item.avatar_color} size={46} />
-            <View style={styles.cardIdentity}>
-              <Text style={styles.name}>{item.full_name}</Text>
-              <Text style={styles.avail}>
-                <Ionicons name="time-outline" size={12} color={colors.textFaint} />{" "}
-                {item.availability || "Flexible"}
-              </Text>
-            </View>
-            <RatingPill rating={item.avg_rating} count={item.rating_count} />
-          </View>
-        </View>
-
-        <View style={styles.skills}>
-          <View style={styles.skillGroup}>
-            <Text style={styles.groupLabel}>OFFERS</Text>
-            <View style={styles.tagWrap}>
-              {item.offers.map((o) => (
-                <SkillTag key={o.skill_id} name={o.name} category="technical" accent />
-              ))}
-            </View>
-          </View>
-          <View style={styles.skillGroup}>
-            <Text style={styles.groupLabel}>WANTS</Text>
-            <View style={styles.tagWrap}>
-              {item.wants.map((w) => (
-                <SkillTag key={w.skill_id} name={w.name} />
-              ))}
-            </View>
-          </View>
-        </View>
-
-        <View style={styles.cardFooter}>
-          {isMatch ? (
-            <View style={[styles.matchBadge, { backgroundColor: colors.accent }]}>
-              <Ionicons name="flash" size={12} color="#000000" />
-              <Text style={styles.matchText}>Complementary match</Text>
-            </View>
-          ) : (
-            <View style={styles.scoreWrap}>
-              <Text style={styles.score}>{item.match_score ?? 0}%</Text>
-              <Text style={styles.scoreLabel}>match</Text>
-            </View>
-          )}
-          <Pressable
-            style={[
-              styles.propose,
-              {
-                backgroundColor: withAlpha(colors.accent, 0.10),
-                borderWidth: 1,
-                borderColor: withAlpha(colors.accent, 0.35),
-              },
-            ]}
-            onPress={(e) => {
-              e.stopPropagation();
-              setProposeFor(item);
-            }}
-          >
-            <Text style={[styles.proposeText, { color: colors.accent }]}>Propose exchange</Text>
-          </Pressable>
-        </View>
-      </Pressable>
-    );
-  };
+  const renderCard = ({ item }: { item: User }) => (
+    <DiscoverCard
+      item={item}
+      onOpen={() => navigation.navigate("UserProfile", { user: item })}
+      onPropose={() => setProposeFor(item)}
+    />
+  );
 
   return (
     <Screen>
       <Header title="Discover" subtitle={`${filtered.length} people to swap with`} />
 
       <View style={styles.controls}>
+        <Field
+          placeholder="Search by name..."
+          value={search}
+          onChangeText={setSearch}
+          autoCapitalize="words"
+          style={{ marginBottom: 0 }}
+        />
         <View style={styles.sortRow}>
           {(["match", "recent", "rating"] as Sort[]).map((s) => (
             <Pressable

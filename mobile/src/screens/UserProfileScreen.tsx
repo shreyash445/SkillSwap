@@ -74,7 +74,7 @@ export function UserProfileScreen({ navigation, route }: Props) {
                     <Text style={styles.ratingName}>{r.rater_name}</Text>
                     <Stars value={r.stars} size={13} />
                   </View>
-                  {r.feedback ? <Text style={styles.ratingFeedback}>"{r.feedback}"</Text> : null}
+                  {r.feedback ? <Text style={styles.ratingFeedback}>“{r.feedback}”</Text> : null}
                 </View>
               ))}
             </View>

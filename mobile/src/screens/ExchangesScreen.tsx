@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useState } from "react";
 import {
   ActivityIndicator,
   FlatList,
-  Pressable,
   RefreshControl,
   StyleSheet,
   Text,
@@ -141,7 +140,7 @@ export function ExchangesScreen({ navigation }: Props) {
           </Text>
         </View>
 
-        {item.message ? <Text style={styles.message}>"{item.message}"</Text> : null}
+        {item.message ? <Text style={styles.message}>“{item.message}”</Text> : null}
 
         <View style={styles.actions}>
           {item.status === "pending" && pendingActions}

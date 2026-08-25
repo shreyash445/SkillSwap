@@ -20,8 +20,8 @@ export interface User {
   avg_rating: number;
   rating_count: number;
   match_score: number | null;
-  offers: { skill_id: number; name: string; level: string }[];
-  wants: { skill_id: number; name: string }[];
+  offers: { id: string; skill_id: number; name: string; level: string }[];
+  wants: { id: string; skill_id: number; name: string }[];
   recent_ratings?: Rating[];
   created_at: string;
 }

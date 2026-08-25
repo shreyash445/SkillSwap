@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   FlatList,
   Pressable,
@@ -24,7 +24,7 @@ import { get, post, patch } from "../api";
 import { useAuth } from "../context/AuthContext";
 import { colors, font, radius, spacing } from "../theme";
 import type { RootStackParamList } from "../navigation";
-import type { Skill, UserSkill } from "../types";
+import type { Skill } from "../types";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Onboarding">;
 
@@ -110,7 +110,6 @@ export function OnboardingScreen({ navigation }: Props) {
     setSaving(true);
     try {
       await patch("/auth/me", { availability });
-      const existing = user?.offers ?? [];
       for (const o of offered) {
         await post("/me/skills", { direction: "offered", skill_id: o.skill.id, proficiency_level: o.level });
       }
@@ -228,14 +227,14 @@ export function OnboardingScreen({ navigation }: Props) {
           )}
           ListEmptyComponent={
             <Text style={styles.noResults}>
-              {offered.length + wanted.length >= skills.length ? "You've added all the skills!" : "No matches"}
+              {offered.length + wanted.length >= skills.length ? "You&apos;ve added all the skills!" : "No matches"}
             </Text>
           }
         />
       )}
 
       {!canAdd && (
-        <Text style={styles.maxed}>You've reached the max of 5 — nice and focused.</Text>
+        <Text style={styles.maxed}>You&apos;ve reached the max of 5 — nice and focused.</Text>
       )}
 
       <View style={styles.availabilityWrap}>

@@ -59,7 +59,7 @@ export function Splash({ onDone }: { onDone: () => void }) {
           <Text style={styles.brand}>SkillSwap</Text>
         </Animated.View>
         <Animated.Text style={[styles.tagline, tagStyle]}>
-          Teach what you know. Learn what you don't.
+          Teach what you know. Learn what you don&apos;t.
         </Animated.Text>
       </Animated.View>
     </View>

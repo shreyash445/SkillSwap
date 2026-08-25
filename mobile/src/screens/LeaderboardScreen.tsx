@@ -12,7 +12,6 @@ import type { LeaderboardEntry } from "../types";
 type Props = TabScreenProps<"Leaderboard">;
 
 const MEDALS = ["🥇", "🥈", "🥉"];
-const PODIUM_COLORS = ["#CDFF57", "#C0C0C8", "#D99B5C"];
 
 export function LeaderboardScreen({ navigation }: Props) {
   const [rows, setRows] = useState<LeaderboardEntry[]>([]);

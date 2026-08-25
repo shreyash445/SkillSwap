@@ -11,7 +11,7 @@ import Animated, {
 import type { SharedValue } from "react-native-reanimated";
 import { Ionicons } from "@expo/vector-icons";
 import { LavaLampBackground } from "../components/LavaLampBackground";
-import { colors, font } from "../theme";
+import { font } from "../theme";
 import type { RootStackParamList } from "../navigation";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");

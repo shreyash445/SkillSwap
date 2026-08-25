@@ -8,6 +8,7 @@ import { Stars, RatingPill } from "../components/StarRating";
 import { Button } from "../components/Button";
 import { Sheet } from "../components/Sheet";
 import { Field } from "../components/Field";
+import { ManageSkillsSheet } from "../components/ManageSkillsSheet";
 import { useAuth } from "../context/AuthContext";
 import { colors, font, radius, spacing } from "../theme";
 import type { TabScreenProps } from "../navigation";
@@ -17,6 +18,7 @@ type Props = TabScreenProps<"Profile">;
 export function ProfileScreen({ navigation }: Props) {
   const { user, logout, updateMe } = useAuth();
   const [editOpen, setEditOpen] = useState(false);
+  const [manageOpen, setManageOpen] = useState(false);
   const [bio, setBio] = useState(user?.bio ?? "");
   const [availability, setAvailability] = useState(user?.availability ?? "");
   const [saving, setSaving] = useState(false);
@@ -49,6 +51,9 @@ export function ProfileScreen({ navigation }: Props) {
             </View>
           ) : null}
           <Button label="Edit profile" variant="secondary" onPress={() => setEditOpen(true)} />
+          {hasSkills && (
+            <Button label="Manage skills" variant="ghost" onPress={() => setManageOpen(true)} />
+          )}
         </View>
 
         {!hasSkills && (
@@ -120,6 +125,8 @@ export function ProfileScreen({ navigation }: Props) {
         />
         <Button label="Save changes" onPress={save} loading={saving} />
       </Sheet>
+
+      <ManageSkillsSheet visible={manageOpen} onClose={() => setManageOpen(false)} />
     </Screen>
   );
 }

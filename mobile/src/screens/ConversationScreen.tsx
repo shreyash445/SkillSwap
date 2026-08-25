@@ -1,4 +1,4 @@
-﻿import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   FlatList,
   KeyboardAvoidingView,
@@ -63,7 +63,7 @@ export function ConversationScreen({ route }: Props) {
         <View style={{ flex: 1 }}>
           <Text style={styles.name}>{other.full_name}</Text>
           <Text style={styles.sub}>
-            {exchange.skill_offered_name} â‡„ {exchange.skill_wanted_name}
+            {exchange.skill_offered_name} ⇄ {exchange.skill_wanted_name}
           </Text>
         </View>
         <View style={[styles.status, { borderColor: statusBorder(exchange.status) }]}>
@@ -99,7 +99,7 @@ export function ConversationScreen({ route }: Props) {
             <View style={styles.empty}>
               <Ionicons name="chatbubble-ellipses-outline" size={28} color={colors.textFaint} />
               <Text style={styles.emptyText}>
-                Start the conversation â€” agree on a time for your {exchange.skill_offered_name} â‡„{" "}
+                Start the conversation — agree on a time for your {exchange.skill_offered_name} ⇄{" "}
                 {exchange.skill_wanted_name} swap.
               </Text>
             </View>

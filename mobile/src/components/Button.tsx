@@ -1,4 +1,4 @@
-﻿import React from "react";
+import React from "react";
 import { ActivityIndicator, Pressable, StyleSheet, Text, ViewStyle } from "react-native";
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
 import { colors, font, radius, spacing } from "../theme";

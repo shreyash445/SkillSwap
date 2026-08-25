@@ -1,11 +1,10 @@
-﻿import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   KeyboardAvoidingView,
   Platform,
   Pressable,
   StyleSheet,
   Text,
-  View,
 } from "react-native";
 import Animated, {
   useSharedValue,
@@ -81,7 +80,7 @@ export function LoginScreen({ navigation }: Props) {
         <Animated.View style={[styles.hero, heroStyle]}>
           <Logo size={96} color={colors.accent} />
           <Text style={styles.brand}>SkillSwap</Text>
-          <Text style={styles.tagline}>Teach what you know. Learn what you don't.</Text>
+          <Text style={styles.tagline}>Teach what you know. Learn what you don&apos;t.</Text>
         </Animated.View>
 
         <Animated.View style={[styles.form, formStyle]}>
