@@ -1,38 +1,38 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { colors } from "../theme";
+import { colors } from "@/theme";
 
 export interface ThemeSettings {
   accent: string;
-  accentDim: string;
+  accentName: string;
   reduceMotion: boolean;
   haptics: boolean;
   notifications: boolean;
 }
 
 const DEFAULT_SETTINGS: ThemeSettings = {
-  accent: "#CDFF57",
-  accentDim: "#8FB433",
+  accent: "#ff7a1a",
+  accentName: "Orange",
   reduceMotion: false,
   haptics: true,
   notifications: true,
 };
 
-const ACCENT_OPTIONS: { label: string; accent: string; accentDim: string }[] = [
-  { label: "Lime", accent: "#CDFF57", accentDim: "#8FB433" },
-  { label: "Cyan", accent: "#5AC8FA", accentDim: "#2E86B3" },
-  { label: "Violet", accent: "#A78BFA", accentDim: "#7C5CFF" },
-  { label: "Pink", accent: "#F472B6", accentDim: "#B6498A" },
-  { label: "Orange", accent: "#FFA94D", accentDim: "#CC7A2E" },
-  { label: "Blue", accent: "#60A5FA", accentDim: "#3B72C4" },
+export const ACCENT_OPTIONS: { label: string; color: string }[] = [
+  { label: "Orange", color: "#ff7a1a" },
+  { label: "Emerald", color: "#34d399" },
+  { label: "Sky", color: "#38bdf8" },
+  { label: "Coral", color: "#ff4d5a" },
+  { label: "Gold", color: "#ffc93c" },
+  { label: "Purple", color: "#a78bfa" },
 ];
 
-const STORAGE_KEY = "skillswap.settings.v1";
+const STORAGE_KEY = "skillswap.theme.v1";
 
 interface ThemeContextValue {
   settings: ThemeSettings;
   accentOptions: typeof ACCENT_OPTIONS;
-  setAccent: (accent: string) => void;
+  setAccent: (color: string) => void;
   toggle: (key: "reduceMotion" | "haptics" | "notifications") => void;
 }
 
@@ -58,15 +58,14 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     if (!hydrated) return;
     AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(settings)).catch(() => {});
     colors.accent = settings.accent;
-    colors.accentDim = settings.accentDim;
   }, [settings, hydrated]);
 
-  const setAccent = useCallback((accent: string) => {
-    const opt = ACCENT_OPTIONS.find((o) => o.accent === accent);
+  const setAccent = useCallback((color: string) => {
+    const opt = ACCENT_OPTIONS.find((o) => o.color === color);
     setSettings((prev) => ({
       ...prev,
-      accent,
-      accentDim: opt?.accentDim ?? prev.accentDim,
+      accent: color,
+      accentName: opt?.label ?? prev.accentName,
     }));
   }, []);
 

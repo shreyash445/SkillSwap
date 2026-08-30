@@ -4,7 +4,8 @@
     "slug": "skillswap",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/images/icon.png",
+    "scheme": "skillswap",
     "userInterfaceStyle": "dark",
     "backgroundColor": "#000000",
     "splash": {
@@ -12,34 +13,37 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.SkillSwap.app",
-      "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
-      }
+      "userInterfaceStyle": "dark",
+      "backgroundColor": "#000000"
     },
     "android": {
-      "package": "com.skillswap.app",
-      "versionCode": 1,
-      "softwareKeyboardLayoutMode": "adjustResize",
+      "userInterfaceStyle": "dark",
+      "backgroundColor": "#000000",
       "adaptiveIcon": {
         "backgroundColor": "#000000",
-        "foregroundImage": "./assets/android-icon-foreground.png",
-        "backgroundImage": "./assets/android-icon-background.png",
-        "monochromeImage": "./assets/android-icon-monochrome.png"
+        "foregroundImage": "./assets/images/android-icon-foreground.png",
+        "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-font"
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#000000",
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 76
+        }
+      ]
     ],
-    "extra": {
-      "eas": {
-        "projectId": "b829b3f9-c4ad-4f70-bb58-82dfd4855248"
-      }
-    },
-    "owner": "techwork"
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    }
   }
 }
