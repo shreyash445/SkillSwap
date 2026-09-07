@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
   scrim: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     backgroundColor: "rgba(0,0,0,0.35)",
   },
 });
