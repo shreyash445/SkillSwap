@@ -2,15 +2,18 @@
 SkillSwap MVP — Django settings.
 """
 
+import os
 from datetime import timedelta
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = "django-insecure-skillswap-mvp-local-key-change-me"
-DEBUG = True
+SECRET_KEY = os.environ.get(
+    "SECRET_KEY", "django-insecure-skillswap-mvp-local-key-change-me"
+)
+DEBUG = os.environ.get("DEBUG", "True").lower() in ("1", "true", "yes")
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [h.strip() for h in os.environ.get("ALLOWED_HOSTS", "*").split(",") if h.strip()]
 
 INSTALLED_APPS = [
     "django.contrib.admin",

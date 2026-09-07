@@ -34,13 +34,13 @@ class UserSummarySerializer(serializers.ModelSerializer):
 
     def get_offers(self, obj):
         return [
-            {"skill_id": us.skill_id, "name": us.skill.name, "level": us.proficiency_level}
+            {"id": str(us.id), "skill_id": us.skill_id, "name": us.skill.name, "level": us.proficiency_level}
             for us in obj.user_skills.filter(direction="offered").select_related("skill")
         ]
 
     def get_wants(self, obj):
         return [
-            {"skill_id": us.skill_id, "name": us.skill.name}
+            {"id": str(us.id), "skill_id": us.skill_id, "name": us.skill.name}
             for us in obj.user_skills.filter(direction="wanted").select_related("skill")
         ]
 

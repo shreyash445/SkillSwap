@@ -147,9 +147,13 @@ class UserListView(views.APIView):
 
         direction = request.query_params.get("direction")  # 'offered' or 'wanted'
         skill_id = request.query_params.get("skill_id")
+        q = request.query_params.get("q")
 
         if direction and skill_id:
             qs = qs.filter(user_skills__direction=direction, user_skills__skill_id=skill_id).distinct()
+
+        if q:
+            qs = qs.filter(Q(first_name__icontains=q) | Q(last_name__icontains=q))
 
         sort = request.query_params.get("sort", "recent")
         if sort == "rating":
