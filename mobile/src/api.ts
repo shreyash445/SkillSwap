@@ -14,7 +14,7 @@ function resolveApiUrl(): string {
   } catch {
     /* ignore */
   }
-  return "http://192.168.1.10:8000/api";
+  return "http://10.50.78.194:8000/api";
 }
 
 export const API_URL = resolveApiUrl();
